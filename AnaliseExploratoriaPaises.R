@@ -24,14 +24,39 @@ str(paises)
 head(paises)
 View(paises)
 
+# Boxplot de algumas variávies relevantes (identificando a existencia de outliers)
+ggboxplot(paises$Alfabetismo, width = 0.5)
+ggboxplot(paises$TaxaNascimento, width = 0.5)
+ggboxplot(paises$TaxaMortalidade, width = 0.5)
+ggboxplot(paises$MortalidadeInf, width = 0.5)
+ggboxplot(paises$PIBperCapita, width = 0.5)
+
+# Top 5 paises com mortalidade infantil mais altas
+paises %>% 
+  tibble::rownames_to_column(var = "NomePais") %>%
+  select(NomePais, MortalidadeInf) %>%
+  arrange(desc(MortalidadeInf)) %>%
+  head(5) %>%
+  ggbarplot(x="NomePais", y="MortalidadeInf", color = "NomePais")
+
+# Boxplot visualizando a mortalidade infantil dos 5 países com maior indice
+
+
 # Matriz de correlacao (removendo a coluna clima)
 chart.Correlation(valores_df[, -11], histogram = TRUE)
 
 #Correlacoes destacadas
-chart.Correlation(select(valores_df, PIBperCapita, Fones, TaxaNascimento, Alfabetismo, Servico), histogram = TRUE)
+chart.Correlation(select(valores_df, PIBperCapita, Fones, TaxaNascimento, Alfabetismo, Servico),
+                  histogram = TRUE)
 
 #Analisar correlacao entre PIBPerCapta e Fones
-#Analisar correlacao entre TacaNascimento e Alfabetismo
-#Analisar correlacao entre Servico e Fones
+corr_pibpercapta_fones <- cor.test(paises$PIBperCapita, paises$Fones, method = "pearson")
+corr_pibpercapta_fones
 
-#Obs: Alguns dos casos acima nao se enquandram na distribuicao normal
+#Analisar correlacao entre TaxaNascimento e Alfabetismo
+corr_txnasc_alfab <- cor.test(paises$TaxaNascimento, paises$Alfabetismo, method = "pearson")
+corr_txnasc_alfab
+
+#Analisar correlacao entre Servico e Fones
+corr_serv_fones <- cor.test(paises$Servico, paises$Fones, method = "pearson")
+corr_serv_fones
