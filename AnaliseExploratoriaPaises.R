@@ -39,8 +39,6 @@ paises %>%
   head(5) %>%
   ggbarplot(x="NomePais", y="MortalidadeInf", color = "NomePais")
 
-# Boxplot visualizando a mortalidade infantil dos 5 países com maior indice
-
 
 # Matriz de correlacao (removendo a coluna clima)
 chart.Correlation(valores_df[, -11], histogram = TRUE)
@@ -60,3 +58,10 @@ corr_txnasc_alfab
 #Analisar correlacao entre Servico e Fones
 corr_serv_fones <- cor.test(paises$Servico, paises$Fones, method = "pearson")
 corr_serv_fones
+
+# Conclusoes
+# Foi possivel já na análise exploratória descobrir correlaçoes entre variaveis como a PIBperCapita 
+# e telefones, a taxa de mortalidade com o alfabetismo (inversamente correlacionados) 
+# e tambem o servico e telefones.
+# Alem disso, pode-se observar quais as variaveis estao de acordo (ou relativamente proximos) da distribuicao normal.
+# Tambem, nota-se que com o boxplot conseguimos idenficiar alguns outliers.
